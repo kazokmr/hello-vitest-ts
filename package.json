@@ -2,6 +2,10 @@
   "name": "hello-vitest-ts",
   "private": true,
   "version": "0.0.0",
+  "engines": {
+    "node": "18.x"
+  },
+  "packageManager": "npm@9.6.5",
   "type": "module",
   "scripts": {
     "dev": "vite",
@@ -9,8 +13,8 @@
     "preview": "vite preview"
   },
   "devDependencies": {
-    "typescript": "^5.0.2",
-    "vite": "^4.3.2",
+    "typescript": "^5.0.4",
+    "vite": "^4.3.4",
     "vitest": "^0.30.1"
   }
 }
