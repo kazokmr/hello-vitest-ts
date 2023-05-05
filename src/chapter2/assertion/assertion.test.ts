@@ -284,3 +284,36 @@ test("throw Error when the length of password is less than 6", () => {
         "The password length must be at least 6 characters.")
     );
 });
+
+// @ts-ignore
+const fetchDataWithCallback = callback => {
+    setTimeout(callback, 3000, "lemon");
+};
+
+test("return lemon", done => {
+    // @ts-ignore
+    const callback = data => {
+        expect(data).toBe("lemon");
+        done;
+    };
+    fetchDataWithCallback(callback)
+});
+
+const fetchDataWithPromiseResolve = () =>
+    new Promise(resolve => setTimeout(resolve, 1000, "lemon"));
+
+test("return lemon", () => {
+    return expect(fetchDataWithPromiseResolve()).resolves.toBe("lemon");
+});
+
+test("return lemon with async/await", async () => {
+    await expect(fetchDataWithPromiseResolve()).resolves.toBe("lemon");
+});
+
+const fetchDataWithPromiseReject = () =>
+    // @ts-ignore
+    new Promise((resolve, reject) => setTimeout(reject, 1000, new Error("lemon does not exist")));
+
+test("failed to return lemon", async () => {
+    await expect(fetchDataWithPromiseReject()).rejects.toThrow(new Error("lemon does not exist"));
+});
