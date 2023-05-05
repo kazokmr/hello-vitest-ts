@@ -173,3 +173,114 @@ test("0.1 + 0.2 is less than 0.4 or 0.1 + 0.2 is equals to 0.30000000000000004",
     expect(0.1 + 0.2 <= 0.4).toBe(true);
     expect(0.1 + 0.2 <= 0.30000000000000004).toBe(true);
 });
+
+const log1 =
+    '10.0.0.3 - - [30/Jan/2023:12:20:12 +0000] "GET / HTTP/1.1" 200 615 "-" "curl/7.74.0" "-"'
+const log2 =
+    '10.0.0.11 - - [30/Jan/2023:12:20:40 +0000] "GET / HTTP/1.1" 200 615 "-" "curl/7.74.0" "-"'
+const log3 =
+    '10.0.0.99 - - [30/Jan/2023:12:20:40 +0000] "GET / HTTP/1.1" 200 615 "-" "curl/7.74.0" "-"'
+
+test("contains 10.0.0.3 IP address", () => {
+    expect(log1).toEqual(expect.stringContaining("10.0.0.3"));
+});
+
+test("contains IP address between 10.0.0.0 and 10.0.0.99", () => {
+    const expected = /^10.0.0.([1-9]?[0-9])/
+
+    expect(log1).toEqual(expect.stringMatching(expected));
+    expect(log2).toEqual(expect.stringMatching(expected));
+    expect(log3).toEqual(expect.stringMatching(expected));
+
+    expect(log1).toMatch(expected);
+    expect(log2).toMatch(expected);
+    expect(log3).toMatch(expected);
+
+    const regex = new RegExp(expected);
+    expect(regex.test(log1)).toBe(true);
+    expect(regex.test(log2)).toBe(true);
+    expect(regex.test(log3)).toBe(true);
+});
+
+const fruitList = ["Apple", "Lemon", "Orange"];
+
+test("contains Apple in itemList", () => {
+    expect(fruitList).toContain("Apple");
+});
+
+test("contains Apple and Orange in fruitList", () => {
+    expect(fruitList).toEqual(expect.arrayContaining(["Apple", "Orange"]));
+});
+
+const itemList = [
+    {name: "Apple", price: 100},
+    {name: "Lemon", price: 150},
+    {name: "Orange", price: 200}
+];
+
+test("contains Apple in ItemList", () => {
+    expect(itemList).toContainEqual({name: "Apple", price: 100});
+});
+
+test("contains Apple and Orange in ItemList", () => {
+    expect(itemList).toEqual(expect.arrayContaining([
+        {name: "Apple", price: 100},
+        {name: "Lemon", price: 150}
+    ]));
+});
+
+const ciBuild = {
+    number: 1,
+    duration: 12000,
+    state: 'success',
+    triggerParameters: {
+        is_scheduled: true,
+    },
+    type: "scheduled_pipeline",
+    actor: {
+        login: "Taka"
+    }
+}
+
+test("build state should be success", () => {
+    expect(ciBuild).toHaveProperty("state", "success");
+});
+
+test("actor should be Taka", () => {
+    expect(ciBuild).toHaveProperty("actor.login", "Taka");
+});
+
+test("triggered by the scheduled pipeline", () => {
+    expect(ciBuild).toEqual(
+        expect.objectContaining({
+            triggerParameters: expect.objectContaining({is_scheduled: true}),
+            type: "scheduled_pipeline"
+        })
+    )
+});
+
+class User {
+    name: string
+    password: string
+
+    constructor({name, password}: { name: string, password: string }) {
+        if (password.length < 6) throw new Error("The password length must be at least 6 characters.");
+        this.name = name;
+        this.password = password;
+    }
+}
+
+test("creates a new user with a 6-character password", () => {
+    expect(new User({name: "hoge", password: "123456"})).toEqual({
+        name: "hoge",
+        password: "123456",
+    });
+});
+
+test("throw Error when the length of password is less than 6", () => {
+    expect(() => new User({name: "hoge", password: "12345"})).toThrow();
+    expect(() => new User({name: "hoge", password: "12345"})).toThrow(Error);
+    expect(() => new User({name: "hoge", password: "12345"})).toThrow(new Error(
+        "The password length must be at least 6 characters.")
+    );
+});
