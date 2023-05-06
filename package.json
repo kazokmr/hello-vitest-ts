@@ -8,9 +8,11 @@
   "packageManager": "npm@9.6.5",
   "type": "module",
   "scripts": {
-    "test": "vitest"
+    "test": "vitest",
+    "prepare": "husky install"
   },
   "devDependencies": {
+    "husky": "8.0.3",
     "typescript": "^5.0.4",
     "vite": "^4.3.4",
     "vitest": "^0.30.1"
