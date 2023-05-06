@@ -12,6 +12,7 @@
     "prepare": "husky install"
   },
   "devDependencies": {
+    "axios": "1.4.0",
     "husky": "8.0.3",
     "typescript": "^5.0.4",
     "vite": "^4.3.4",
