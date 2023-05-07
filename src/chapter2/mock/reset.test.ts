@@ -10,8 +10,8 @@ describe("#reset mocks with vi.fn", () => {
         // spyOnを使ってglobalオブジェクト(JavaScriptの標準組み込みオブジェクト)のDate関数をMock化する
         spyDate = vi.spyOn(global, "Date").mockImplementation(() => mockDate);
         // Mock関数の実装方法によって、mockRestoreの仕様が変わる
-        // mockFn = vi.fn().mockImplementation(() => mockDate);
-        mockFn = vi.fn(() => mockDate);
+        mockFn = vi.fn().mockImplementation(() => mockDate);
+        // mockFn = vi.fn(() => mockDate);
     });
 
     test("vi.clearAllMocks", () => {
@@ -63,9 +63,9 @@ describe("#reset mocks with vi.fn", () => {
         expect(mockFn.mock.calls).toEqual([]);
         expect(mockFn.mock.results).toEqual([]);
 
-        // mockImplementationで実装したMock関数もリセットされる（Date関数自体はMock化はされたまま）
-        expect(new Date(targetDate)).toEqual({});
-        expect(mockFn(targetDate)).toEqual(undefined);  // vi.fn() の場合は undefinedを返す
+        // Mock化されたDate関数の実装もクリアされる
+        expect(new Date(targetDate)).toEqual({});       // vi.spyOn() は 空のオブジェクト"{}"を返す
+        expect(mockFn(targetDate)).toEqual(undefined);  // vi.fn() は 実装自体が未定義となる
     });
 
     test("vi.restoreAllMocks", () => {
@@ -96,7 +96,7 @@ describe("#reset mocks with vi.fn", () => {
         expect(new Date(targetDate)).toEqual(new Date(targetDate));
 
         // vi.fn()で定義したMock関数
-        expect(mockFn(targetDate)).toEqual(undefined);      // vi.fun().mockImplementation(impl) で定義するとundefined
-        // expect(mockFn(targetDate)).toEqual(mockDate);    // vi.fun(impl)で定義するとMock関数を再実装する
+        expect(mockFn(targetDate)).toEqual(undefined);      // vi.fun().mockImplementation(impl) で定義すると resetと同じ挙動
+        // expect(mockFn(targetDate)).toEqual(mockDate);    // vi.fun(impl)でモック関数を定義していると実装内容で再処理する
     });
 });

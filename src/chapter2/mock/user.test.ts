@@ -9,6 +9,7 @@ test("should fetch all users", async () => {
     const resp = {data: users};
 
     // axios.get関数が呼ばれたら resp の値を返す
+    // (axios as Mocked<typeof axios>).get.mockResolvedValue(resp);
     vi.mocked(axios.get).mockResolvedValue(resp);
 
     // Users.search() 関数の戻り値が usersと一致すること
