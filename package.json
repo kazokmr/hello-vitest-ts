@@ -12,8 +12,10 @@
     "prepare": "husky install"
   },
   "devDependencies": {
+    "@types/jsdom": "^21.1.1",
     "axios": "1.4.0",
     "husky": "8.0.3",
+    "jsdom": "^22.0.0",
     "typescript": "^5.0.4",
     "vite": "^4.3.4",
     "vitest": "^0.30.1"
