@@ -1,66 +1,82 @@
-import {afterAll, beforeAll, describe, expect, test} from "vitest";
-import {Builder, By, Capabilities, Key, until, WebDriver} from "selenium-webdriver";
+import { afterAll, beforeAll, describe, expect, test } from "vitest";
+import {
+  Builder,
+  By,
+  Capabilities,
+  Key,
+  until,
+  WebDriver,
+} from "selenium-webdriver";
 
 describe("e2e test with selenium and chromeDriver", () => {
-    let chromeDriver: WebDriver;
+  let chromeDriver: WebDriver;
 
-    beforeAll(async () => {
-        const chromeCapabilities = Capabilities.chrome();
-        chromeCapabilities.set("goog:chromeOptions", {
-            args: [
-                "--headless",
-                "--no-sandbox",
-                "--disable-gpu",
-                "--lang=en-US",
-                "--user-data-dir=./tmp_user_data",
-            ]
-        });
-
-        chromeDriver = await new Builder().withCapabilities(chromeCapabilities).build();
+  beforeAll(async () => {
+    const chromeCapabilities = Capabilities.chrome();
+    chromeCapabilities.set("goog:chromeOptions", {
+      args: [
+        "--headless",
+        "--no-sandbox",
+        "--disable-gpu",
+        "--lang=en-US",
+        "--user-data-dir=./tmp_user_data",
+      ],
     });
 
-    afterAll(async () => {
-        await chromeDriver.quit();
-    });
+    chromeDriver = await new Builder()
+      .withCapabilities(chromeCapabilities)
+      .build();
+  });
 
-    test("a search keyword will be on the page title in google.com", async () => {
-        await chromeDriver.get("https://www.google.com/ncr");
+  afterAll(async () => {
+    await chromeDriver.quit();
+  });
 
-        await chromeDriver.findElement(By.name("q")).sendKeys("webdriver", Key.RETURN);
+  test("a search keyword will be on the page title in google.com", async () => {
+    await chromeDriver.get("https://www.google.com/ncr");
 
-        const results = await chromeDriver.wait(until.titleIs("webdriver - Google Search"), 10000);
+    await chromeDriver
+      .findElement(By.name("q"))
+      .sendKeys("webdriver", Key.RETURN);
 
-        expect(results).toBe(true);
-    });
+    const results = await chromeDriver.wait(
+      until.titleIs("webdriver - Google Search"),
+      10000,
+    );
 
+    expect(results).toBe(true);
+  });
 });
 
 describe("e2e test with selenium and geckoDriver", () => {
-    let geckoDriver: WebDriver;
+  let geckoDriver: WebDriver;
 
-    beforeAll(async () => {
-        const fireFoxCapabilities = Capabilities.firefox();
-        fireFoxCapabilities.set("moz:firefoxOptions", {
-            args: [
-                "-headless"
-            ]
-        });
-
-        geckoDriver = await new Builder().withCapabilities(fireFoxCapabilities).build();
+  beforeAll(async () => {
+    const fireFoxCapabilities = Capabilities.firefox();
+    fireFoxCapabilities.set("moz:firefoxOptions", {
+      args: ["-headless"],
     });
 
-    afterAll(async () => {
-        await geckoDriver.quit();
-    });
+    geckoDriver = await new Builder()
+      .withCapabilities(fireFoxCapabilities)
+      .build();
+  });
 
-    test("a search keyword will be on the page title in google.com", async () => {
+  afterAll(async () => {
+    await geckoDriver.quit();
+  });
 
-        await geckoDriver.get("https://www.google.com/ncr");
+  test("a search keyword will be on the page title in google.com", async () => {
+    await geckoDriver.get("https://www.google.com/ncr");
 
-        await geckoDriver.findElement(By.name("q")).sendKeys("webdriver", Key.RETURN);
+    await geckoDriver
+      .findElement(By.name("q"))
+      .sendKeys("webdriver", Key.RETURN);
 
-        const results = await geckoDriver.wait(until.titleIs("webdriver - Google Search"), 10000);
-        expect(results).toBe(true);
-    });
-
+    const results = await geckoDriver.wait(
+      until.titleIs("webdriver - Google Search"),
+      10000,
+    );
+    expect(results).toBe(true);
+  });
 });

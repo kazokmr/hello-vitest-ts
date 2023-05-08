@@ -1,26 +1,26 @@
 <!DOCTYPE html>
 <html lang="ja">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Hello Vitest</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Hello Vitest</title>
 </head>
 <body>
 <div class="header">
-    <h1>Hello Vitest</h1>
+  <h1>Hello Vitest</h1>
 </div>
 <button id="showMessage" type="button">Pass Vitest Test</button>
 <div id="message"></div>
 
 <script type="text/javascript">
-  (function () {
+  (function() {
     const showMessage = () => {
       const p = document.createElement("p");
       p.textContent = "You Passed!!!";
       if (document.querySelector("#message").textContent === "") {
         document.querySelector("#message").prepend(p);
       }
-    }
+    };
     const button = document.querySelector("#showMessage");
     button.addEventListener("click", showMessage);
   })();

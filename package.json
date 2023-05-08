@@ -13,7 +13,8 @@
     "prepare": "husky install",
     "storybook": "storybook dev -p 6006",
     "build-storybook": "storybook build",
-    "lint": "eslint src"
+    "lint": "eslint src",
+    "format": "prettier --list-different src"
   },
   "devDependencies": {
     "@storybook/addon-essentials": "^7.0.9",
@@ -36,11 +37,13 @@
     "axios": "^1.4.0",
     "chromedriver": "^113.0.0",
     "eslint": "^8.40.0",
+    "eslint-config-prettier": "^8.8.0",
     "eslint-plugin-react": "^7.32.2",
     "geckodriver": "^3.2.0",
     "husky": "^8.0.3",
     "jsdom": "^22.0.0",
     "playwright": "^1.33.0",
+    "prettier": "^2.8.8",
     "prop-types": "^15.8.1",
     "puppeteer": "^20.1.1",
     "react": "^18.2.0",

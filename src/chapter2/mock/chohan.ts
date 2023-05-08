@@ -1,3 +1,3 @@
-import {seed} from "./seed.ts";
+import { seed } from "./seed.ts";
 
-export const chohan = () => seed() % 2 === 0 ? "丁" : "半"
+export const chohan = () => (seed() % 2 === 0 ? "丁" : "半");
