@@ -8,5 +8,10 @@ export default defineConfig({
       provider: "c8",
       reporter: ["html"],
     },
+    reporters: [
+      "default",
+      "junit",
+    ],
+    outputFile: "./reports/vitest/vitest-report.xml",
   },
 });
