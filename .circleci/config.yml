@@ -12,10 +12,12 @@ jobs:
       - run:
           name: Run Test
 #          command: npm test -- src/chapter2/getting_started_vitest src/chapter2/assertion src/chapter2/group src/chapter2/mock
+#          command: |
+#            TEST_FILES=$(npx vitest src/chapter2/getting_started_vitest src/chapter2/assertion src/chapter2/group src/chapter2/mock --sequence.hook='list' | circleci tests split)
+#            echo $TEST_FILES
+#            npm test -- $TEST_FILES
           command: |
-            TEST_FILES=$(npx vitest src/chapter2/getting_started_vitest src/chapter2/assertion src/chapter2/group src/chapter2/mock --sequence.hook='list' | circleci tests split)
-            echo $TEST_FILES
-            npm test -- $TEST_FILES
+            npm test -- --shard=$(($CIRCLE_NODE_INDEX+1))/$CIRCLE_NODE_TOTAL src/chapter2/getting_started_vitest src/chapter2/assertion src/chapter2/group src/chapter2/mock
       - store_test_results:
           path: reports/vitest
 workflows:
