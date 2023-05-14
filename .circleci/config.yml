@@ -13,7 +13,7 @@ jobs:
           name: Run Test
 #          command: npm test -- src/chapter2/getting_started_vitest src/chapter2/assertion src/chapter2/group src/chapter2/mock
           command: |
-            TEST_FILES=$(npx vitest --sequence.hooks=list src/chapter2/getting_started_vitest src/chapter2/assertion src/chapter2/group src/chapter2/mock | circleci tests split)
+            TEST_FILES=$(npx vitest src/chapter2/getting_started_vitest src/chapter2/assertion src/chapter2/group src/chapter2/mock --sequence.hook='list' | circleci tests split)
             echo $TEST_FILES
             npm test -- $TEST_FILES
       - store_test_results:
