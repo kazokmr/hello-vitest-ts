@@ -17,6 +17,9 @@ jobs:
             - ./node_modules
           key: node-v1-{{ checksum "package-lock.json" }}
       - run:
+          name: Run lint and format
+          command: npm run lint && npm run format
+      - run:
           name: Run Test
 #          command: npm test -- src/chapter2/getting_started_vitest src/chapter2/assertion src/chapter2/group src/chapter2/mock
 #          command: |
