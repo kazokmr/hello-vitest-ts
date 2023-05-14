@@ -3,6 +3,7 @@ jobs:
   test:
     docker:
       - image: cimg/node:18.14.0
+    parallelism: 2
     steps:
       - checkout
       - run:
@@ -10,7 +11,11 @@ jobs:
           command: npm install
       - run:
           name: Run Test
-          command: npm test -- src/chapter2/getting_started_vitest src/chapter2/assertion src/chapter2/group src/chapter2/mock
+#          command: npm test -- src/chapter2/getting_started_vitest src/chapter2/assertion src/chapter2/group src/chapter2/mock
+          command: |
+            TEST_FILES=$(npx vitest --sequence.hooks=list src/chapter2/getting_started_vitest src/chapter2/assertion src/chapter2/group src/chapter2/mock | circleci tests split)
+            echo $TEST_FILES
+            npm test -- $TEST_FILES
       - store_test_results:
           path: reports/vitest
 workflows:
