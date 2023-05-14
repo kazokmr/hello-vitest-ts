@@ -5,6 +5,12 @@ jobs:
       - image: cimg/node:18.14.0
     steps:
       - checkout
+      - run:
+          name: Install node package
+          command: npm install
+      - run:
+          name: Run Test
+          command: npm test -- src/chapter2/getting_started_vitest src/chapter2/assertion src/chapter2/group src/chapter2/mock
 workflows:
   test:
     jobs:
