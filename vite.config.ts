@@ -7,6 +7,7 @@ export default defineConfig({
     coverage: {
       provider: "c8",
       reporter: ["html"],
+      reportsDirectory: "./reports/coverage"
     },
     reporters: [
       "default",

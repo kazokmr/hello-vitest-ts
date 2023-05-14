@@ -24,9 +24,11 @@ jobs:
 #            echo $TEST_FILES
 #            npm test -- $TEST_FILES
           command: |
-            npm test -- --shard=$(($CIRCLE_NODE_INDEX+1))/$CIRCLE_NODE_TOTAL src/chapter2/getting_started_vitest src/chapter2/assertion src/chapter2/group src/chapter2/mock
+            npm run coverage -- --shard=$(($CIRCLE_NODE_INDEX+1))/$CIRCLE_NODE_TOTAL src/chapter2/getting_started_vitest src/chapter2/assertion src/chapter2/group src/chapter2/mock
       - store_test_results:
           path: reports/vitest
+      - store_artifacts:
+          path: reports/coverage
 workflows:
   test:
     jobs:
