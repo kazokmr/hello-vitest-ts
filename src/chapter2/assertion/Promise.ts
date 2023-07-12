@@ -21,8 +21,11 @@ doSomethingAsync().then(successCallback).catch(failureCallback);
 
 doSomethingAsync().then(successCallback, failureCallback);
 
-// @ts-ignore
-const task = (callback, name, total) => {
+const task = (
+  callback: (total: number) => void,
+  name: string,
+  total: number,
+) => {
   setTimeout(() => {
     total += 1;
     console.log(`${name} finished! Total is${total}.`);
@@ -31,16 +34,12 @@ const task = (callback, name, total) => {
 };
 
 task(
-  // @ts-ignore
   total => {
     task(
-      // @ts-ignore
       total => {
         task(
-          // @ts-ignore
           total => {
             task(
-              // @ts-ignore
               total => {
                 task(() => {}, "task-5", total);
               },
@@ -60,16 +59,14 @@ task(
   0,
 );
 
-// @ts-ignore
-const taskPromise = (name, total) => {
-  return new Promise(resolve => {
+const taskPromise = (name: string, total: number): Promise<number> =>
+  new Promise(resolve => {
     setTimeout(() => {
       total += 1;
       console.log(`${name} finished! Total is ${total}.`);
       resolve(total);
     }, 1000);
   });
-};
 
 taskPromise("task-1", 0)
   .then(total => taskPromise("task-2", total))

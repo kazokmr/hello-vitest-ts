@@ -20,3 +20,4 @@ rules: {
 settings:
   react:
     version: 18.2.6
+ignorePatterns: ["**/*.test.*"]
