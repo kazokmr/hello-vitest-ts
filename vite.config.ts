@@ -5,7 +5,7 @@ export default defineConfig({
     environment: "jsdom",
     css: true,
     coverage: {
-      provider: "c8",
+      provider: "v8",
       reporter: ["html"],
       reportsDirectory: "./reports/coverage"
     },
