@@ -52,7 +52,7 @@
     "selenium-webdriver": "^4.16.0",
     "storybook": "^7.6.10",
     "typescript": "^5.3.3",
-    "vite": "^5.0.13",
+    "vite": "^5.4.12",
     "vitest": "^1.2.1"
   }
 }
